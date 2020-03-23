@@ -40,7 +40,7 @@ class CV19_data:
         return "COVID_19 "+self.country+':'+self.province
     
     def __str__(self):
-        return "COVID_19\n"+"Country: "+self.country+"\nProvince:"+self.province+"\nTime:"+str(self.time_stamps)+"\nData:"+str(self.data)
+        return "COVID_19\n"+"Country: "+self.country+"\nProvince:"+self.province+"\nTime:"+str(self.time_stamps)+"\nData:"+str(self.general_data)
 
     
 '''
@@ -53,7 +53,6 @@ Outputs a list of CV19_data objects
 
 TODO:
     *Split US states correctly
-    *Merge countries marked with all
     *raise error if the specified country or province is not found
         
 '''
@@ -70,6 +69,7 @@ def read_cvs(file_name, countries=[], provinces=[], data_start=4):
         all_countries = False
       
     data_list = []
+    added_countries = []
     with open(file_name) as file:
         line = file.readline()
         time_stamps = np.array(line.strip('\n').split(',')[data_start:-1]) #removes the first 4 elements since they does not contain time stamps
@@ -81,34 +81,36 @@ def read_cvs(file_name, countries=[], provinces=[], data_start=4):
 
             for country in countries:
                 if country in line:
-                    #print(line)
+                    print(line)
                     #parse the line and save data from country to cv19_data object
-                    data = np.array(line.strip('\n').split(',')[data_start:-1])
+                    data = np.array(line.strip('\n').split(',')[data_start:])
                     data = data.astype(np.float)
-                    cv19_object = CV19_data(country, 'All', time_stamps, data)
-                    data_list.append(cv19_object)
+                    # print(data)
+                    #If the country exists in data_list, the data is appended
+                    if country in added_countries:
+                        for cv19_object in data_list:
+                            if cv19_object.country == country:
+                                cv19_object.general_data += data
+                                break
+                    else:
+                        cv19_object = CV19_data(country, 'All', time_stamps, data)
+                        data_list.append(cv19_object)
+                        added_countries.append(country)
                 
             for province in provinces:
                 if province in line:
-                    #print(line)
+                    print(line)
                     #parse the line and save data from province to cv19_data object
                     line_list = line.strip('\n').split(',')
-                    data = np.array(line_list[data_start:-1])
+                    data = np.array(line_list[data_start:])
                     data = data.astype(np.float)
                     cv19_object = CV19_data(line_list[1], province, time_stamps, data)
                     data_list.append(cv19_object)
     
-    #Merges objects with the same country and province==All
-    #TODO
-    for obj_1 in data_list:
-        for obj_2 in data_list:
-            if (obj_1.country == obj_2.country) and (obj_1.province == 'All') and (obj_2.province == 'All'):
-                pass
-                #print("merge")
-                
     return data_list
             
-#path = '../csse_covid_19_data/csse_covid_19_time_series/'
+path = '../csse_covid_19_data/csse_covid_19_time_series/'
 #path+'/time_series_19-covid-Deaths.csv'
-#objects = read_cvs(path+'time_series_19-covid-Confirmed.csv', countries=['Sweden', 'Norway'], provinces=['French Guiana'])
+objects = read_cvs(path+'time_series_19-covid-Confirmed.csv', countries=['Canada'])
+print(objects[0])
 #objects = read_cvs(path+'time_series_19-covid-Confirmed.csv', countries=['Canada'])
