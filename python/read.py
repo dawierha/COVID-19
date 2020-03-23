@@ -81,11 +81,12 @@ def read_cvs(file_name, countries=[], provinces=[], data_start=4):
 
             for country in countries:
                 if country in line:
-                    print(line)
+                    # print(line)
                     #parse the line and save data from country to cv19_data object
                     data = np.array(line.strip('\n').split(',')[data_start:])
                     data = data.astype(np.float)
                     # print(data)
+                    
                     #If the country exists in data_list, the data is appended
                     if country in added_countries:
                         for cv19_object in data_list:
@@ -99,7 +100,7 @@ def read_cvs(file_name, countries=[], provinces=[], data_start=4):
                 
             for province in provinces:
                 if province in line:
-                    print(line)
+                    # print(line)
                     #parse the line and save data from province to cv19_data object
                     line_list = line.strip('\n').split(',')
                     data = np.array(line_list[data_start:])
@@ -111,6 +112,6 @@ def read_cvs(file_name, countries=[], provinces=[], data_start=4):
             
 path = '../csse_covid_19_data/csse_covid_19_time_series/'
 #path+'/time_series_19-covid-Deaths.csv'
-objects = read_cvs(path+'time_series_19-covid-Confirmed.csv', countries=['Canada'])
-print(objects[0])
+objects = read_cvs(path+'time_series_19-covid-Confirmed.csv', countries=['Canada', 'Australia'], provinces=['Alberta'])
+print(objects)
 #objects = read_cvs(path+'time_series_19-covid-Confirmed.csv', countries=['Canada'])
