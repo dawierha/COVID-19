@@ -54,6 +54,7 @@ Outputs a list of CV19_data objects
 TODO:
     *Split US states correctly
     *raise error if the specified country or province is not found
+    *include ignore list
         
 '''
 def read_cvs(file_name, countries=[], provinces=[], data_start=4):
