@@ -23,7 +23,7 @@ def create_cv19_objects(filename_conf, filename_deaths, countries=[], provinces=
     return confirmed_cases
 
 path = '../csse_covid_19_data/csse_covid_19_time_series/'
-obj_list = create_cv19_objects(path+'time_series_19-covid-Confirmed.csv', path+'/time_series_19-covid-Deaths.csv', countries=['Australia'])[0]
+obj_list = create_cv19_objects(path+'time_series_19-covid-Confirmed.csv', path+'/time_series_19-covid-Deaths.csv', countries=['Spain'])[0]
 
 where_array = obj_list.deaths.astype(np.bool)
 
@@ -47,7 +47,7 @@ plt.grid()
 ax2 = ax1.twinx()  # instantiate a second axes that shares the same x-axis
 # ax2.set_xlim(left=35)
 # ax2.set_ylim([-0.5, 10])
-ax2.set_ylim(top=1.5)
+# ax2.set_ylim(top=1.5)
 
 ax2.plot(percentage, color='tab:green')
 fig.tight_layout()

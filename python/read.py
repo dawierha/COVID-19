@@ -72,7 +72,7 @@ def read_cvs(file_name, countries=[], provinces=[], data_start=4):
     added_countries = []
     with open(file_name) as file:
         line = file.readline()
-        time_stamps = np.array(line.strip('\n').split(',')[data_start:-1]) #removes the first 4 elements since they does not contain time stamps
+        time_stamps = np.array(line.strip('\n').split(',')[data_start:]) #removes the first 4 elements since they does not contain time stamps
         for line in file:
             # print(line)
             if all_countries:
@@ -110,8 +110,7 @@ def read_cvs(file_name, countries=[], provinces=[], data_start=4):
     
     return data_list
             
-path = '../csse_covid_19_data/csse_covid_19_time_series/'
-#path+'/time_series_19-covid-Deaths.csv'
-objects = read_cvs(path+'time_series_19-covid-Confirmed.csv', countries=['Canada', 'Australia'], provinces=['Alberta'])
-print(objects)
+# path = '../csse_covid_19_data/csse_covid_19_time_series/'
+# objects = read_cvs(path+'time_series_19-covid-Confirmed.csv', countries=['Canada', 'Australia'], provinces=['Alberta'])
+# print(objects)
 #objects = read_cvs(path+'time_series_19-covid-Confirmed.csv', countries=['Canada'])
