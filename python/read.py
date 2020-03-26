@@ -48,6 +48,7 @@ Inputs:
     file_name - Name of the file containgin the cvs data
     countries - list of the countries to save data from. Takes all the provinces in that country. Empty returns all the countries.
     provinces - list of provinces to save data from. Empty returns no provinces.
+    ig_provinces - list of provinces to ignore for a country specified in countries
 
 Outputs a list of CV19_data objects
 
@@ -57,7 +58,7 @@ TODO:
     *include ignore list
         
 '''
-def read_cvs(file_name, countries=[], provinces=[], data_start=4):
+def read_cvs(file_name, countries=[], provinces=[], ig_provinces=[], data_start=4):
     #checks to see if 'countries' and 'provinces' are lists
     if not isinstance(countries, list):
         raise TypeError("\'countries\' must be a list")
@@ -115,7 +116,7 @@ def read_cvs(file_name, countries=[], provinces=[], data_start=4):
     
     return data_list
             
-path = '../csse_covid_19_data/csse_covid_19_time_series/'
-objects = read_cvs(path+'time_series_covid19_confirmed_global.csv', countries=['Canada', 'Australia'], provinces=['Alberta'])
-print(objects)
+# path = '../csse_covid_19_data/csse_covid_19_time_series/'
+# objects = read_cvs(path+'time_series_covid19_confirmed_global.csv', countries=['Canada', 'Australia'], provinces=['Alberta'])
+# print(objects)
 #objects = read_cvs(path+'time_series_19-covid-Confirmed.csv', countries=['Canada'])
