@@ -74,7 +74,6 @@ def read_cvs(file_name, countries=[], provinces=[], ig_provinces=[], data_start=
     added_countries = []
     with open(file_name) as file:
         csv_reader = csv.reader(file, delimiter=',')
-        #line = file.readline()
         header = True
         for row in csv_reader:
             if header:
